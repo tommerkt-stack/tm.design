@@ -1,0 +1,8 @@
+node_modules/
+temporary screenshots/
+package.json
+package-lock.json
+serve.mjs
+screenshot.mjs
+CLAUDE.md
+dixieraizpacheco.com_.png

@@ -1,0 +1,1460 @@
+﻿<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TM Design — Webseiten für die Schweiz</title>
+  <meta name="description" content="Professionelle Webseiten für Schweizer Unternehmen. Fertig in 7 Tagen. Tom Merkt – Ihr Webdesigner aus der Schweiz.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
+  <script type="module" src="https://unpkg.com/@splinetool/viewer/build/spline-viewer.js"></script>
+  <style>
+    @property --rotate {
+      syntax: "<angle>"; initial-value: 132deg; inherits: false;
+    }
+    :root {
+      --p: #2c2cf3;
+      --dark: #171b27;
+      --d2: #1e2436;
+      --d3: #222840;
+      --border: rgba(255,255,255,0.07);
+      --light: #f4f3ee;
+      interpolate-size: allow-keywords;
+      font-feature-settings: "calt","ss07","ss08","cv01","zero","cv03","cv04";
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+      background: var(--dark); color: #fff;
+      line-height: 1.5; -webkit-font-smoothing: antialiased;
+      cursor: none; overflow-x: hidden; max-width:100vw;
+    }
+
+    /* ─── CURSOR ─── */
+    #cur,#cur-r {
+      position: fixed; border-radius: 50%; pointer-events: none;
+      z-index: 10000; transform: translate(-50%,-50%); will-change: left,top;
+      transition: width .18s, height .18s, background .18s, border-color .18s, opacity .25s;
+    }
+    #cur { width:8px; height:8px; background:#fff; }
+    #cur-r { width:38px; height:38px; border:1.5px solid rgba(255,255,255,.3); background:transparent; }
+    body.cl #cur { width:6px; height:6px; background:var(--p); }
+    body.cl #cur-r { width:52px; height:52px; border-color:rgba(44,44,243,.55); }
+    body.cb #cur { width:12px; height:12px; background:var(--p); }
+    body.cb #cur-r { width:64px; height:64px; border-color:rgba(44,44,243,.4); }
+
+    /* ─── PROGRESS ─── */
+    #prog {
+      position:fixed; top:0; left:0; height:2px; width:100%;
+      background:linear-gradient(90deg, var(--p), #6b6bff);
+      transform-origin:left; transform:scaleX(0);
+      z-index:10001; box-shadow:0 0 12px rgba(44,44,243,.7); pointer-events:none;
+    }
+
+    /* ─── LOADER ─── */
+    #loader {
+      position:fixed; inset:0; background:var(--dark); z-index:9990;
+      display:flex; align-items:center; justify-content:center; flex-direction:column; gap:20px;
+      transition: opacity .55s, visibility .55s;
+    }
+    #loader.out { opacity:0; visibility:hidden; }
+    #loader img { height:47px; width:auto; mix-blend-mode:screen; animation:pulse .9s ease-in-out infinite alternate; }
+    @keyframes pulse { from{opacity:.5;transform:scale(.96)} to{opacity:1;transform:scale(1)} }
+    .ldr-bar { width:130px; height:2px; background:rgba(255,255,255,.08); border-radius:2px; overflow:hidden; }
+    .ldr-fill { height:100%; background:var(--p); border-radius:2px; animation:lfill .7s ease forwards; }
+    @keyframes lfill { from{width:0} to{width:100%} }
+
+    /* ─── NAV ─── */
+    nav {
+      position:fixed; inset:0 0 auto 0; z-index:999;
+      background:transparent;
+      height:64px; padding:0 48px; display:flex; align-items:center;
+      transition:border-color .3s;
+    }
+    nav::before {
+      content:''; position:absolute; inset:0; z-index:-1;
+      background:rgba(23,27,39,.92); backdrop-filter:blur(20px);
+      border-bottom:1px solid var(--border);
+      transition:border-color .3s;
+    }
+    nav.scrolled::before { border-color:rgba(255,255,255,.12); }
+    .nav-in {
+      width:100%; max-width:1280px; margin:0 auto;
+      display:flex; align-items:center; justify-content:space-between;
+    }
+    .nav-logo { display:flex; align-items:center; gap:0; text-decoration:none; cursor:none; }
+    .nav-logo img {
+      height:41px; width:auto; display:block;
+      mix-blend-mode:screen;
+    }
+    .nav-ul { display:flex; align-items:center; gap:36px; list-style:none; }
+    .nav-ul a {
+      font-size:13px; font-weight:500; color:rgba(255,255,255,.55);
+      text-decoration:none; letter-spacing:-.01em; transition:color .2s; cursor:none; position:relative;
+    }
+    .nav-ul a::after {
+      content:''; position:absolute; left:0; bottom:-4px;
+      width:0; height:1px; background:var(--p); transition:width .25s;
+    }
+    .nav-ul a:hover,.nav-ul a.active { color:#fff; }
+    .nav-ul a:hover::after,.nav-ul a.active::after { width:100%; }
+    .nav-cta {
+      background:var(--p) !important; color:#fff !important;
+      padding:9px 20px; border-radius:7px; font-size:13px !important;
+      font-weight:600 !important; box-shadow:0 2px 14px rgba(44,44,243,.35);
+      transition:background .2s !important;
+    }
+    .nav-cta::after { display:none !important; }
+    .nav-cta:hover { background:#1d1dcc !important; }
+    .ham {
+      display:none; flex-direction:column; gap:5px;
+      cursor:none; background:none; border:none; padding:8px;
+    }
+    .ham span { display:block; width:22px; height:2px; background:#fff; border-radius:2px; transition:transform .3s, opacity .3s; }
+    .ham.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+    .ham.open span:nth-child(2){opacity:0}
+    .ham.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+    #mob {
+      display:none; position:fixed; inset:64px 0 0;
+      background:var(--dark); z-index:998;
+      padding:40px 32px; flex-direction:column;
+      border-top:1px solid var(--border);
+      opacity:0; transform:translateY(-10px); transition:opacity .3s, transform .3s;
+    }
+    #mob.open { opacity:1; transform:translateY(0); }
+    #mob a {
+      font-size:26px; font-weight:700; color:rgba(255,255,255,.65);
+      text-decoration:none; padding:16px 0; border-bottom:1px solid var(--border);
+      letter-spacing:-.04em; transition:color .2s; cursor:none;
+    }
+    #mob a:hover { color:#fff; }
+    #mob a.hi { color:var(--p); border-bottom:none; margin-top:28px; }
+
+    /* ─── HERO ─── */
+    #home {
+      min-height:100vh; display:flex; align-items:center;
+      padding:88px 48px 72px;
+      background:linear-gradient(to bottom, #000 0%, #171b27 38%);
+      position:relative; overflow:hidden;
+    }
+    /* Multiple animated orbs for visual depth */
+    #home::before {
+      content:''; position:absolute; top:-180px; right:8%;
+      width:600px; height:600px;
+      background:radial-gradient(circle, rgba(44,44,243,.10) 0%, transparent 65%);
+      pointer-events:none; animation:orb-drift 12s ease-in-out infinite alternate;
+    }
+    .hero-orb2 {
+      position:absolute; bottom:-200px; left:-150px;
+      width:600px; height:600px;
+      background:radial-gradient(circle, rgba(100,80,220,.08) 0%, transparent 65%);
+      pointer-events:none; animation:orb-drift 16s ease-in-out infinite alternate-reverse;
+    }
+    @keyframes orb-drift { from{transform:translate(0,0)} to{transform:translate(40px,30px)} }
+    #home::after {
+      content:''; position:absolute; bottom:0; left:0; right:0; height:200px;
+      background:linear-gradient(to top, var(--dark), transparent);
+      pointer-events:none; z-index:1;
+    }
+    .hero-grid {
+      max-width:1280px; margin:0 auto; width:100%;
+      display:grid; grid-template-columns:1.1fr 0.9fr;
+      gap:64px; align-items:center; position:relative; z-index:2;
+    }
+
+    /* Spinning badge */
+    .badge-wrap { display:inline-block; position:relative; margin-bottom:28px; }
+    .badge-ring {
+      position:absolute; inset:-3px; border-radius:22px; padding:2px;
+      background:conic-gradient(from var(--rotate), var(--p) 0%, transparent 30%, transparent 70%, var(--p) 100%);
+      animation:spin-b 3s linear infinite;
+      -webkit-mask:linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite:xor; mask-composite:exclude;
+    }
+    @keyframes spin-b { to{--rotate:492deg} }
+    .badge {
+      display:inline-flex; align-items:center; gap:8px;
+      font-size:11px; font-weight:600; color:rgba(255,255,255,.65);
+      text-transform:uppercase; letter-spacing:.1em;
+      background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.1);
+      padding:7px 14px; border-radius:20px;
+    }
+    .gdot {
+      width:7px; height:7px; background:#34d470; border-radius:50%;
+      box-shadow:0 0 8px rgba(52,212,112,.7);
+      animation:blink 2.4s ease-in-out infinite; flex-shrink:0;
+    }
+    @keyframes blink {0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.8)}}
+
+    .h1 {
+      font-size:clamp(85px,10.5vw,142px);
+      font-weight:800; line-height:1.0; letter-spacing:-.045em; color:#fff; margin-bottom:28px;
+    }
+    .wl { display:block; overflow:hidden; padding-bottom:0.12em; margin-bottom:-0.12em; }
+    .w { display:inline-block; transform:translateY(110%); opacity:0; transition:transform .7s cubic-bezier(.22,1,.36,1), opacity .6s ease; }
+    .wb { color:var(--p); }
+    .hero-name { font-size:.2em; font-weight:500; letter-spacing:.02em; color:#fff; opacity:.55; }
+    .sub {
+      font-size:16px; color:rgba(255,255,255,.52); line-height:1.72;
+      max-width:440px; margin-bottom:20px;
+      opacity:0; transform:translateY(14px);
+      transition:opacity .6s ease .65s, transform .6s ease .65s;
+    }
+    .trust-pills {
+      display:flex; flex-wrap:wrap; gap:10px; margin-bottom:36px;
+      opacity:0; transform:translateY(10px);
+      transition:opacity .5s ease .72s, transform .5s ease .72s;
+    }
+    .pill {
+      display:inline-flex; align-items:center; gap:6px;
+      font-size:12px; font-weight:600; color:rgba(255,255,255,.7);
+      background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.1);
+      padding:6px 14px; border-radius:20px; letter-spacing:-.01em;
+    }
+    .pill-check { color:#34d470; font-size:11px; }
+    .hbtns {
+      display:flex; align-items:center; gap:20px;
+      opacity:0; transform:translateY(14px);
+      transition:opacity .6s ease .82s, transform .6s ease .82s;
+    }
+    .on .w  { transform:translateY(0); opacity:1; }
+    .on .sub { opacity:1; transform:translateY(0); }
+    .on .trust-pills { opacity:1; transform:translateY(0); }
+    .on .hbtns { opacity:1; transform:translateY(0); }
+    .on .tom-card { opacity:1; transform:translateY(0) scale(1); }
+
+    .btn-p {
+      background:var(--p); color:#fff; padding:14px 30px; border-radius:8px;
+      font-size:15px; font-weight:600; text-decoration:none; letter-spacing:-.02em;
+      display:inline-flex; align-items:center; gap:8px;
+      box-shadow:0 4px 24px rgba(44,44,243,.32); cursor:none;
+      transition:background .2s, box-shadow .2s; position:relative; overflow:hidden;
+    }
+    .btn-p::after { content:''; position:absolute; inset:0; background:rgba(255,255,255,.12); opacity:0; transition:opacity .2s; }
+    .btn-p:hover::after { opacity:1; }
+    .btn-p:hover { box-shadow:0 8px 32px rgba(44,44,243,.5); }
+    .btn-p:active { transform:scale(.98); }
+    .btn-g {
+      color:rgba(255,255,255,.6); font-size:15px; font-weight:500;
+      text-decoration:none; display:inline-flex; align-items:center; gap:7px;
+      transition:color .2s; cursor:none; letter-spacing:-.01em;
+    }
+    .btn-g:hover { color:#fff; }
+    .btn-g:hover .arr { transform:translateX(4px); }
+    .arr { display:inline-flex; transition:transform .2s; }
+
+    /* Tom's photo card */
+    .tom-card {
+      position:relative;
+      opacity:0; transform:translateY(24px) scale(.98);
+      transition:opacity .8s ease .4s, transform .8s cubic-bezier(.22,1,.36,1) .4s;
+    }
+    /* Gentle float animation (activates after hero entrance) */
+    .tom-card.floating { animation:float-card 7s ease-in-out infinite; }
+    @keyframes float-card {
+      0%,100% { transform:translateY(0px); }
+      50% { transform:translateY(-14px); }
+    }
+    .tom-img-wrap {
+      border-radius:20px; overflow:hidden;
+      aspect-ratio:3/4; position:relative;
+      box-shadow:0 40px 100px rgba(0,0,0,.65), 0 0 0 1px rgba(255,255,255,.08);
+    }
+    .tom-img-wrap img {
+      width:100%; height:100%; object-fit:cover; object-position:center 20%;
+      display:block;
+    }
+    .tom-img-grad {
+      position:absolute; bottom:0; left:0; right:0; height:40%;
+      background:linear-gradient(to top, rgba(23,27,39,.92) 0%, rgba(23,27,39,.3) 60%, transparent 100%);
+      z-index:2; pointer-events:none;
+    }
+    .tom-name-tag {
+      position:absolute; bottom:28px; left:28px; z-index:3;
+    }
+    .tom-name-tag .tname { font-size:22px; font-weight:800; letter-spacing:-.04em; line-height:1.1; color:#fff; }
+    .tom-name-tag .trole { font-size:13px; color:rgba(255,255,255,.55); margin-top:4px; }
+    /* Glow border around photo */
+    .tom-img-wrap::after {
+      content:''; position:absolute; inset:0; border-radius:20px; pointer-events:none; z-index:4;
+      box-shadow:inset 0 0 0 1px rgba(44,44,243,.25), inset 0 0 60px rgba(44,44,243,.05);
+    }
+
+    /* ─── TICKER ─── */
+    .ticker {
+      border-top:1px solid var(--border); border-bottom:1px solid var(--border);
+      padding:16px 0; overflow:hidden; position:relative;
+      background:rgba(255,255,255,.015);
+    }
+    .ticker::before,.ticker::after {
+      content:''; position:absolute; top:0; bottom:0; width:120px; z-index:2; pointer-events:none;
+    }
+    .ticker::before{left:0;background:linear-gradient(to right,var(--dark),transparent)}
+    .ticker::after{right:0;background:linear-gradient(to left,var(--dark),transparent)}
+    .tk-track { display:flex; animation:ticker 38s linear infinite; width:max-content; }
+    .tk-track:hover { animation-play-state:paused; }
+    @keyframes ticker { to{transform:translateX(-50%)} }
+    .ti {
+      display:flex; align-items:center; gap:10px; padding:0 36px;
+      color:rgba(255,255,255,.3); font-size:13px; font-weight:600;
+      white-space:nowrap; transition:color .2s; cursor:default;
+    }
+    .ti:hover { color:rgba(255,255,255,.7); }
+    .ti-dot { width:4px; height:4px; background:var(--p); border-radius:50%; flex-shrink:0; opacity:.7; }
+
+    /* ─── SECTIONS COMMON ─── */
+    .sec { max-width:1280px; margin:0 auto; }
+    /* Eyebrow labels: light/muted on dark sections, dark on light sections */
+    .kk { font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.13em; color:rgba(255,255,255,.42); margin-bottom:10px; }
+    .kk-dark { color:rgba(255,255,255,.42); }
+    .sh { font-size:clamp(36px,4.2vw,56px); font-weight:800; letter-spacing:-.045em; line-height:1.02; }
+    .sh-dark { color:#fff; }
+
+    /* ─── STATS / LEISTUNGEN ─── */
+    #leistungen {
+      background:var(--dark); padding:96px 48px;
+      position:relative; overflow:hidden;
+    }
+    /* Subtle warm gradient decoration */
+    #leistungen::before {
+      content:''; position:absolute; top:-120px; right:-80px;
+      width:500px; height:500px;
+      background:radial-gradient(circle, rgba(44,44,243,.09) 0%, transparent 65%);
+      pointer-events:none;
+    }
+    .stats-top { display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:72px; }
+    .stats-copy { font-size:15px; color:rgba(255,255,255,.45); line-height:1.75; max-width:290px; text-align:right; }
+    .stats-grid {
+      display:grid; grid-template-columns:repeat(3,1fr); gap:16px;
+    }
+    .stat {
+      padding:36px 32px; background:var(--d2); border-radius:20px;
+      border:1px solid var(--border);
+      transition:border-color .3s, transform .3s cubic-bezier(.22,1,.36,1);
+    }
+    .stat:hover { border-color:rgba(44,44,243,.35); transform:translateY(-4px); }
+    .stat-n { font-size:clamp(24px,2.6vw,36px); font-weight:800; letter-spacing:-.04em; line-height:1; color:rgba(170,170,255,.9); margin-bottom:10px; }
+    .stat-l { font-size:13px; color:rgba(255,255,255,.48); font-weight:500; }
+
+    /* ─── SERVICES CARDS ─── */
+    .svc-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-top:56px; }
+    .svc-card {
+      background:var(--d2); border:1px solid var(--border);
+      border-radius:20px; padding:40px 36px;
+      transition:transform .3s cubic-bezier(.22,1,.36,1), box-shadow .3s, border-color .3s;
+      cursor:default; position:relative; overflow:hidden;
+    }
+    .svc-card::before {
+      content:''; position:absolute; inset:0; opacity:0;
+      background:radial-gradient(circle at 25% 25%, rgba(44,44,243,.1) 0%, transparent 65%);
+      transition:opacity .35s;
+    }
+    .svc-card:hover::before { opacity:1; }
+    .svc-card:hover { transform:translateY(-6px); box-shadow:0 24px 60px rgba(0,0,0,.4); border-color:rgba(44,44,243,.35); }
+    .svc-icon {
+      width:52px; height:52px; border-radius:12px;
+      background:rgba(44,44,243,.08); border:1px solid rgba(44,44,243,.15);
+      display:flex; align-items:center; justify-content:center; font-size:22px;
+      margin-bottom:24px; transition:background .3s, transform .3s;
+    }
+    .svc-card:hover .svc-icon { background:rgba(44,44,243,.14); transform:scale(1.08); }
+    .svc-title { font-size:20px; font-weight:700; letter-spacing:-.03em; color:#fff; margin-bottom:12px; line-height:1.2; }
+    .svc-desc { font-size:14px; color:rgba(255,255,255,.5); line-height:1.72; }
+    .svc-tag {
+      display:inline-flex; align-items:center; gap:6px;
+      font-size:12px; font-weight:600; color:var(--p);
+      background:rgba(44,44,243,.07); border:1px solid rgba(44,44,243,.15);
+      padding:5px 12px; border-radius:20px; margin-top:20px; letter-spacing:-.01em;
+    }
+
+    /* ─── PRICING ─── */
+    #preise {
+      background:var(--dark); padding:96px 48px;
+      position:relative; overflow:hidden;
+    }
+    #preise::before {
+      content:''; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+      width:800px; height:800px;
+      background:radial-gradient(circle, rgba(44,44,243,.06) 0%, transparent 60%);
+      pointer-events:none;
+    }
+    .price-grid { display:grid; grid-template-columns:1fr 1.2fr; gap:64px; align-items:center; margin-top:56px; }
+    .price-left h3 { font-size:clamp(28px,3vw,40px); font-weight:800; letter-spacing:-.04em; line-height:1.1; margin-bottom:24px; }
+    .price-left p { font-size:15px; color:rgba(255,255,255,.52); line-height:1.75; margin-bottom:32px; }
+    .price-features { display:flex; flex-direction:column; gap:14px; }
+    .pf { display:flex; align-items:center; gap:12px; font-size:15px; color:rgba(255,255,255,.75); }
+    .pf-check {
+      width:22px; height:22px; border-radius:50%; flex-shrink:0;
+      background:rgba(44,44,243,.2); border:1px solid rgba(44,44,243,.3);
+      display:flex; align-items:center; justify-content:center;
+      font-size:11px; color:rgba(150,150,255,1);
+    }
+    .price-card {
+      background:var(--d2); border:1px solid rgba(44,44,243,.18);
+      border-radius:20px; padding:48px;
+      position:relative; overflow:hidden;
+      box-shadow:0 0 0 1px rgba(255,255,255,.04), 0 40px 80px rgba(0,0,0,.3);
+    }
+    /* Animated gradient orb inside card */
+    .price-card::before {
+      content:''; position:absolute; top:-60px; right:-60px;
+      width:260px; height:260px;
+      background:radial-gradient(circle, rgba(44,44,243,.18), transparent 65%);
+      pointer-events:none; animation:orb-drift 8s ease-in-out infinite alternate;
+    }
+    .price-tag {
+      display:inline-flex; align-items:center; gap:8px;
+      font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.1em;
+      color:rgba(150,150,255,1); background:rgba(44,44,243,.12); border:1px solid rgba(44,44,243,.2);
+      padding:6px 14px; border-radius:20px; margin-bottom:24px;
+    }
+    .price-amount {
+      font-size:clamp(60px,7vw,88px); font-weight:800;
+      letter-spacing:-.06em; line-height:1; color:#fff; margin-bottom:8px;
+    }
+    .price-amount .currency { font-size:clamp(28px,3vw,40px); font-weight:600; letter-spacing:-.03em; opacity:.7; vertical-align:super; margin-right:14px; }
+    .price-note { font-size:14px; color:rgba(255,255,255,.4); margin-bottom:12px; }
+    .price-renewal { font-size:13px; color:rgba(150,150,255,.75); margin-bottom:28px; background:rgba(44,44,243,.08); border:1px solid rgba(44,44,243,.15); padding:10px 14px; border-radius:8px; }
+    .price-divider { height:1px; background:var(--border); margin-bottom:28px; }
+    .price-includes { display:flex; flex-direction:column; gap:12px; margin-bottom:40px; }
+    .pi { display:flex; align-items:center; gap:12px; font-size:14px; color:rgba(255,255,255,.7); }
+    .pi-dot { width:5px; height:5px; background:var(--p); border-radius:50%; flex-shrink:0; }
+    .price-cta { width:100%; display:flex; align-items:center; justify-content:center; gap:8px; }
+    .price-footer { margin-top:16px; font-size:12px; color:rgba(255,255,255,.3); text-align:center; }
+
+    /* ─── PROZESS ─── */
+    #prozess {
+      background:var(--dark); padding:96px 48px;
+      position:relative; overflow:hidden;
+    }
+    #prozess::before {
+      content:''; position:absolute; inset:0; pointer-events:none;
+      background:radial-gradient(ellipse at 70% 40%, rgba(44,44,243,.08) 0%, transparent 55%);
+    }
+    .proc-top { margin-bottom:72px; position:relative; }
+    .proc-grid {
+      display:grid; grid-template-columns:repeat(2,1fr); gap:20px;
+    }
+    #prozess-canvas {
+      position:absolute; inset:0; width:100%; height:100%;
+      mix-blend-mode:screen; pointer-events:none; z-index:0;
+    }
+    .pc {
+      background:var(--d2); border:1px solid var(--border);
+      border-radius:18px; padding:32px 28px;
+      position:relative; overflow:hidden;
+      transition:border-color .3s, transform .3s cubic-bezier(.22,1,.36,1), box-shadow .3s;
+    }
+    .pc:hover { border-color:rgba(44,44,243,.35); transform:translateY(-5px); box-shadow:0 24px 60px rgba(0,0,0,.4); }
+    /* Decorative corner glow on hover */
+    .pc::after {
+      content:''; position:absolute; top:-40px; right:-40px;
+      width:180px; height:180px;
+      background:radial-gradient(circle, rgba(44,44,243,.12), transparent 65%);
+      pointer-events:none; opacity:0; transition:opacity .3s;
+    }
+    .pc:hover::after { opacity:1; }
+    .pc-badge {
+      width:44px; height:44px; border-radius:12px;
+      background:rgba(44,44,243,.15); border:1px solid rgba(44,44,243,.3);
+      display:flex; align-items:center; justify-content:center;
+      font-size:17px; font-weight:800; color:rgba(150,150,255,1); letter-spacing:-.04em;
+      margin-bottom:18px; flex-shrink:0;
+    }
+    .pc-num { display:none; }
+    .pc-step { display:none; }
+    .pc-title { font-size:18px; font-weight:800; letter-spacing:-.04em; color:#fff; line-height:1.1; margin-bottom:10px; }
+    .pc-desc { font-size:13px; color:rgba(255,255,255,.52); line-height:1.75; max-width:320px; }
+
+    .sec-head { display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:40px; }
+    .sec-count { font-size:13px; color:rgba(255,255,255,.3); align-self:flex-end; padding-bottom:8px; }
+    /* ─── TESTIMONIALS ─── */
+    #stimmen {
+      background:var(--dark); padding:96px 48px;
+      position:relative; overflow:hidden;
+    }
+    #stimmen::before {
+      content:'"'; position:absolute; right:5%; top:5%;
+      font-size:320px; font-weight:800; line-height:1;
+      color:rgba(255,255,255,.04); pointer-events:none; user-select:none;
+      font-feature-settings:normal;
+    }
+    .test-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-top:48px; }
+    .tcard {
+      background:var(--d2); border:1px solid var(--border);
+      border-radius:20px; padding:36px;
+      display:flex; flex-direction:column; gap:20px;
+      transition:transform .3s cubic-bezier(.22,1,.36,1), border-color .3s;
+      cursor:default;
+    }
+    .tcard:hover { transform:translateY(-5px); border-color:rgba(44,44,243,.3); }
+    .stars { display:flex; gap:3px; }
+    .star { color:#f5a623; font-size:14px; }
+    .tquote { font-size:15px; color:rgba(255,255,255,.6); line-height:1.72; font-style:italic; flex:1; }
+    .tquote::before { content:'"'; font-style:normal; color:var(--p); font-size:28px; line-height:0; position:relative; top:8px; margin-right:2px; }
+    .tauthor { display:flex; align-items:center; gap:14px; }
+    .tavatar {
+      width:44px; height:44px; border-radius:50%;
+      background:rgba(44,44,243,.1); border:2px solid rgba(44,44,243,.2);
+      display:flex; align-items:center; justify-content:center;
+      font-size:16px; font-weight:700; color:var(--p); flex-shrink:0;
+    }
+    .tname { font-size:14px; font-weight:700; letter-spacing:-.02em; color:#fff; }
+    .trole { font-size:12px; color:rgba(255,255,255,.4); }
+
+    /* ─── CONTACT ─── */
+    #kontakt {
+      background:var(--dark); padding:120px 48px;
+      text-align:center; position:relative; overflow:hidden;
+    }
+    #kontakt::before {
+      content:''; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+      width:900px; height:900px;
+      background:radial-gradient(circle, rgba(44,44,243,.1) 0%, rgba(80,60,220,.04) 40%, transparent 65%);
+      pointer-events:none; animation:orb-pulse 6s ease-in-out infinite alternate;
+    }
+    @keyframes orb-pulse { from{transform:translate(-50%,-50%) scale(1)} to{transform:translate(-50%,-50%) scale(1.15)} }
+    #kontakt::after {
+      content:''; position:absolute; bottom:-200px; left:-100px;
+      width:600px; height:600px;
+      background:radial-gradient(circle, rgba(80,40,200,.06), transparent 65%);
+      pointer-events:none;
+    }
+    .cta-in { position:relative; z-index:2; max-width:680px; margin:0 auto; }
+    #day { font-size:clamp(18px,2vw,24px); color:rgba(255,255,255,.35); font-weight:500; letter-spacing:-.02em; margin-bottom:12px; }
+    .cta-h {
+      font-size:clamp(52px,8.5vw,108px); font-weight:800;
+      letter-spacing:-.055em; line-height:.93; color:#fff; margin-bottom:36px;
+    }
+    .cta-h .bl { color:var(--p); }
+    .cta-sub { font-size:16px; color:rgba(255,255,255,.45); line-height:1.7; max-width:440px; margin:0 auto 48px; }
+    .cta-row { display:flex; align-items:center; justify-content:center; gap:20px; flex-wrap:wrap; }
+    .cta-contact-links {
+      display:flex; flex-direction:column; align-items:flex-start; gap:8px; margin-top:4px;
+    }
+    .contact-link {
+      font-size:14px; color:rgba(255,255,255,.45); text-decoration:none;
+      border-bottom:1px solid rgba(255,255,255,.12); padding-bottom:4px;
+      transition:color .2s, border-color .2s; cursor:none;
+      display:inline-flex; align-items:center; gap:8px;
+    }
+    .contact-link:hover { color:#fff; border-color:rgba(255,255,255,.4); }
+    .contact-link-icon { font-size:12px; opacity:.5; }
+
+    /* ─── FOOTER ─── */
+    footer { background:var(--dark); border-top:1px solid var(--border); }
+    .foot-top {
+      max-width:1280px; margin:0 auto; padding:64px 48px 48px;
+      display:grid; grid-template-columns:1.5fr 1fr 1fr; gap:64px;
+    }
+    .foot-brand-logo { height:42px; width:auto; mix-blend-mode:screen; margin-bottom:16px; display:block; }
+    .foot-brand p { font-size:14px; color:rgba(255,255,255,.4); line-height:1.7; max-width:260px; margin-bottom:24px; }
+    .foot-socials { display:flex; gap:10px; }
+    .fsoc {
+      width:36px; height:36px; border-radius:8px;
+      border:1px solid var(--border);
+      display:flex; align-items:center; justify-content:center;
+      color:rgba(255,255,255,.4); font-size:13px; text-decoration:none;
+      transition:border-color .2s, color .2s, background .2s; cursor:none;
+    }
+    .fsoc:hover { border-color:var(--p); color:var(--p); background:rgba(44,44,243,.08); }
+    .foot-col h4 { font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.1em; color:rgba(255,255,255,.3); margin-bottom:18px; }
+    .foot-links { display:flex; flex-direction:column; gap:10px; }
+    .foot-links a, .foot-links span { font-size:14px; color:rgba(255,255,255,.5); text-decoration:none; transition:color .2s; cursor:none; }
+    .foot-links a:hover { color:#fff; }
+    .foot-bottom {
+      max-width:1280px; margin:0 auto; padding:22px 48px;
+      border-top:1px solid var(--border);
+      display:flex; align-items:center; justify-content:space-between;
+    }
+    .foot-copy { font-size:12px; color:rgba(255,255,255,.28); }
+    .foot-legal { display:flex; gap:20px; }
+    .foot-legal a { font-size:12px; color:rgba(255,255,255,.3); text-decoration:none; transition:color .2s; cursor:none; }
+    .foot-legal a:hover { color:rgba(255,255,255,.7); }
+    #ltime { font-size:12px; color:rgba(255,255,255,.28); }
+
+    /* ─── BACK TO TOP ─── */
+    #btt {
+      position:fixed; bottom:32px; right:32px; z-index:998;
+      width:44px; height:44px; border-radius:50%;
+      background:var(--d2); border:1px solid var(--border);
+      color:rgba(255,255,255,.6); display:flex; align-items:center; justify-content:center;
+      cursor:none; text-decoration:none;
+      opacity:0; transform:translateY(12px);
+      transition:opacity .3s, transform .3s, background .2s, border-color .2s, color .2s;
+      pointer-events:none;
+    }
+    #btt.show { opacity:1; transform:translateY(0); pointer-events:auto; }
+    #btt:hover { background:var(--p); border-color:var(--p); color:#fff; }
+
+    /* ─── REVEALS ─── */
+    .rv { opacity:0; transform:translateY(22px); transition:opacity .65s cubic-bezier(.22,1,.36,1), transform .65s cubic-bezier(.22,1,.36,1); }
+    .rv.in { opacity:1; transform:translateY(0); }
+    .d1{transition-delay:.08s} .d2{transition-delay:.16s} .d3{transition-delay:.24s} .d4{transition-delay:.32s}
+
+    /* ─── RESPONSIVE ─── */
+    @media(max-width:1100px) {
+      .price-grid { grid-template-columns:1fr; gap:40px; }
+    }
+
+    /* ── Tablet (≤900px) ── */
+    @media(max-width:900px) {
+      /* Nav */
+      .nav-ul { display:none; }
+      .ham { display:flex; }
+      #mob { display:flex; }
+      nav { padding:0 24px; }
+
+      /* Section padding */
+      #home { padding:88px 24px 60px; }
+      #leistungen,#preise,#prozess,#stimmen { padding:72px 24px; }
+      #kontakt { padding:88px 24px; }
+      .foot-top { grid-template-columns:1fr; gap:32px; padding:48px 24px 32px; }
+      .foot-bottom { padding:18px 24px; flex-direction:column; gap:10px; text-align:center; }
+
+      /* Hero */
+      .hero-grid { grid-template-columns:1fr; }
+      .tom-card { display:none; }
+      .h1 { font-size:clamp(54px,11vw,100px); }
+
+      /* Stats */
+      .stats-top { flex-direction:column; gap:20px; margin-bottom:40px; }
+      .stats-copy { text-align:left; max-width:100%; }
+      .stats-grid { grid-template-columns:1fr 1fr; gap:12px; }
+      .stat { border-right:none; }
+
+      /* Services */
+      .svc-grid { grid-template-columns:1fr 1fr; }
+
+      /* Process */
+      .proc-grid { grid-template-columns:1fr; }
+      .proc-top { margin-bottom:40px; }
+
+      /* Testimonials */
+      .test-grid { grid-template-columns:1fr; }
+
+      /* Pricing */
+      .price-card { padding:36px 28px; }
+      .price-grid { gap:32px; }
+    }
+
+    /* ── Mobile (≤600px) ── */
+    @media(max-width:600px) {
+      /* Nav */
+      nav { padding:0 20px; }
+
+      /* Section padding */
+      #home { padding:80px 20px 48px; }
+      #leistungen,#preise,#prozess,#stimmen { padding:56px 20px; }
+      #kontakt { padding:64px 20px; }
+      .foot-top { padding:36px 20px 28px; }
+      .foot-bottom { padding:16px 20px; }
+
+      /* Hero */
+      .h1 { font-size:clamp(38px,13vw,64px); margin-bottom:18px; }
+      .sub { font-size:15px; margin-bottom:16px; }
+      .hbtns { flex-wrap:wrap; gap:14px; }
+      .trust-pills { gap:7px; }
+      .pill { font-size:11px; padding:5px 11px; }
+      .badge-wrap { margin-bottom:18px; }
+
+      /* Stats */
+      .stats-grid { grid-template-columns:1fr; gap:10px; }
+      .stats-top { margin-bottom:32px; }
+      .stat { padding:28px 24px; }
+      .stat-n { font-size:clamp(20px,6vw,32px); }
+
+      /* Services */
+      .svc-grid { grid-template-columns:1fr; }
+      .svc-card { padding:28px 24px; }
+
+      /* Process */
+      .pc { padding:24px 22px; }
+      .pc-title { font-size:16px; }
+
+      /* Pricing */
+      .price-left h3 { font-size:clamp(22px,6.5vw,34px); }
+      .price-card { padding:28px 22px; }
+      .price-amount { font-size:clamp(52px,16vw,80px); }
+      .price-amount .currency { font-size:clamp(24px,7vw,36px); }
+
+      /* Testimonials */
+      .test-grid { grid-template-columns:1fr; }
+      .tcard { padding:24px 20px; }
+      .tquote { font-size:14px; }
+
+      /* Contact */
+      .cta-h { font-size:clamp(38px,12.5vw,68px); }
+      .cta-sub { font-size:15px; margin-bottom:36px; }
+      .cta-row { flex-direction:column; align-items:center; gap:14px; }
+      .cta-contact-links { align-items:center; }
+      #day { font-size:clamp(15px,4vw,20px); }
+    }
+
+    /* ── Small phones (≤430px) ── */
+    @media(max-width:430px) {
+      nav { padding:0 16px; }
+      #home { padding:76px 16px 44px; }
+      #leistungen,#preise,#prozess,#stimmen { padding:48px 16px; }
+      #kontakt { padding:56px 16px; }
+      .foot-top { padding:32px 16px 24px; }
+      .foot-bottom { padding:14px 16px; }
+      .h1 { font-size:clamp(34px,12vw,52px); }
+      .cta-h { font-size:clamp(34px,12vw,56px); }
+      .btn-p { padding:13px 24px; font-size:14px; }
+      .price-card { padding:24px 18px; }
+      .stat { padding:24px 20px; }
+      .svc-card { padding:24px 20px; }
+      .pc { padding:20px 18px; }
+      .tcard { padding:20px 18px; }
+      .sh { font-size:clamp(28px,8vw,42px); }
+    }
+
+    /* ── Touch devices: hide custom cursor ── */
+    @media(hover:none) and (pointer:coarse) {
+      #cur,#cur-r { display:none; }
+      body { cursor:auto; }
+      a,button,[data-magnetic],[tabindex] { cursor:pointer; }
+    }
+
+    /* ─── INTRO / SPLINE ─── */
+    #intro {
+      position:relative; width:100%; height:100vh; min-height:600px;
+      background:#000;
+      display:flex; flex-direction:column; overflow:hidden;
+    }
+    .intro-spot1, .intro-spot2 { display:none; }
+    @keyframes spot-drift { from{transform:translate(0,0)} to{transform:translate(32px,22px)} }
+    .intro-grid {
+      flex:1; max-width:1280px; margin:0 auto; width:100%;
+      display:grid; grid-template-columns:0.5fr 1.5fr; gap:32px;
+      align-items:center; padding:88px 48px 40px; position:relative; z-index:2;
+    }
+    .intro-left { display:flex; flex-direction:column; align-items:flex-start; }
+    .intro-eyebrow {
+      font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.16em;
+      color:rgba(255,255,255,.28); margin-bottom:28px;
+      opacity:0; transform:translateY(14px);
+      transition:opacity .6s ease .1s, transform .6s cubic-bezier(.22,1,.36,1) .1s;
+    }
+    .intro-h1 {
+      font-size:clamp(50px,6.8vw,90px); font-weight:800; letter-spacing:-.05em;
+      line-height:.93; color:#fff; margin-bottom:28px;
+      opacity:0; transform:translateY(22px);
+      transition:opacity .9s ease .25s, transform .9s cubic-bezier(.22,1,.36,1) .25s;
+    }
+    .intro-sub {
+      font-size:16px; color:rgba(255,255,255,.38); line-height:1.72;
+      max-width:380px; margin-bottom:48px;
+      opacity:0; transform:translateY(14px);
+      transition:opacity .7s ease .48s, transform .7s cubic-bezier(.22,1,.36,1) .48s;
+    }
+    .intro-cta {
+      display:inline-flex; align-items:center; gap:14px;
+      color:rgba(255,255,255,.42); font-size:12px; font-weight:700;
+      letter-spacing:.1em; text-transform:uppercase; text-decoration:none; cursor:none;
+      opacity:0; transform:translateY(10px);
+      transition:opacity .6s ease .65s, transform .6s cubic-bezier(.22,1,.36,1) .65s, color .25s;
+    }
+    .intro-cta:hover { color:rgba(255,255,255,.8); }
+    .intro-arrow-wrap {
+      width:40px; height:40px; border-radius:50%;
+      border:1px solid rgba(255,255,255,.16);
+      display:flex; align-items:center; justify-content:center;
+      transition:border-color .25s, transform .35s cubic-bezier(.22,1,.36,1);
+    }
+    .intro-cta:hover .intro-arrow-wrap { border-color:rgba(255,255,255,.45); transform:translateY(5px); }
+    #intro.intro-on .intro-eyebrow,
+    #intro.intro-on .intro-h1,
+    #intro.intro-on .intro-sub,
+    #intro.intro-on .intro-cta { opacity:1; transform:translateY(0); }
+    .intro-spline {
+      position:relative; height:68vh;
+      display:flex; align-items:center; justify-content:center;
+      opacity:0; transform:translateX(16px);
+      transition:opacity 1.1s ease .3s, transform 1.1s cubic-bezier(.22,1,.36,1) .3s;
+    }
+    #intro.intro-on .intro-spline { opacity:1; transform:translateX(0); }
+    spline-viewer {
+      position:absolute;
+      top:0; bottom:0; left:0; right:-110px;
+      width:auto;
+      background:transparent;
+      mix-blend-mode:screen;
+      -webkit-mask-image: radial-gradient(ellipse 90% 85% at 50% 50%, black 30%, transparent 64%);
+      mask-image: radial-gradient(ellipse 90% 85% at 50% 50%, black 30%, transparent 64%);
+    }
+    .intro-spline::after {
+      content:''; position:absolute; inset:0; pointer-events:none; z-index:10;
+      background: linear-gradient(to bottom, transparent 52%, #000 92%);
+    }
+    .intro-scroll-ind {
+      position:absolute; bottom:28px; left:50%; transform:translateX(-50%);
+      display:flex; flex-direction:column; align-items:center; gap:8px; z-index:10;
+      text-decoration:none; cursor:none;
+      opacity:0; animation:ind-fadein 1s ease 1.7s forwards;
+    }
+    @keyframes ind-fadein { to{opacity:1} }
+    .intro-scroll-ind span {
+      font-size:10px; font-weight:700; letter-spacing:.15em; text-transform:uppercase;
+      color:rgba(255,255,255,.18);
+    }
+    .scroll-mouse {
+      width:22px; height:34px; border:1.5px solid rgba(255,255,255,.16); border-radius:11px;
+      display:flex; align-items:flex-start; justify-content:center; padding-top:6px;
+    }
+    .scroll-wheel {
+      width:3px; height:7px; background:rgba(255,255,255,.32); border-radius:2px;
+      animation:scroll-wh 1.9s ease-in-out infinite;
+    }
+    @keyframes scroll-wh { 0%{transform:translateY(0);opacity:1} 100%{transform:translateY(9px);opacity:0} }
+    @media(max-width:900px) {
+      .intro-grid { grid-template-columns:1fr; padding:88px 24px 0; gap:0; align-content:start; }
+      .intro-spline { height:56vh; }
+      .intro-h1 { font-size:clamp(44px,11vw,70px); }
+      .intro-sub { font-size:15px; }
+    }
+    @media(max-width:600px) {
+      #intro { height:auto; min-height:100svh; }
+      .intro-grid { padding:80px 20px 0; gap:0; }
+      .intro-spline { height:52vh; }
+      .intro-h1 { font-size:clamp(36px,12vw,58px); }
+      .intro-sub { font-size:14px; }
+      .intro-eyebrow { font-size:10px; }
+      .intro-cta { padding:11px 22px; font-size:13px; }
+    }
+    @media(max-width:430px) {
+      .intro-grid { padding:76px 16px 0; }
+      .intro-h1 { font-size:clamp(32px,12vw,52px); }
+      .intro-spline { height:48vh; }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="cur"></div>
+  <div id="cur-r"></div>
+  <div id="prog"></div>
+
+  <!-- LOADER -->
+  <div id="loader">
+    <img src="tm logo neu.png" alt="TM Design">
+    <div class="ldr-bar"><div class="ldr-fill"></div></div>
+  </div>
+
+  <!-- NAV -->
+  <nav id="nav">
+    <div class="nav-in">
+      <a href="#home" class="nav-logo">
+        <img src="tm logo neu.png" alt="TM Design">
+      </a>
+      <ul class="nav-ul">
+        <li><a href="#leistungen">Leistungen</a></li>
+<li><a href="#preise">Preise</a></li>
+        <li><a href="#stimmen">Referenzen</a></li>
+        <li><a href="#kontakt" class="nav-cta">Jetzt anfragen</a></li>
+      </ul>
+      <button class="ham" id="ham" aria-label="Menü" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <div id="mob">
+    <a href="#leistungen">Leistungen</a>
+    <a href="#preise">Preise</a>
+    <a href="#stimmen">Referenzen</a>
+    <a href="#kontakt" class="hi">Jetzt anfragen →</a>
+  </div>
+
+  <!-- INTRO / SPLINE 3D -->
+  <section id="intro">
+    <div class="intro-spot1"></div>
+    <div class="intro-spot2"></div>
+    <div class="intro-grid">
+      <div class="intro-left">
+        <div class="intro-eyebrow">TM Design · Webdesign Schweiz</div>
+        <h1 class="intro-h1">Bereit<br><span style="color:var(--p)">gesehen</span><br>zu werden?</h1>
+        <p class="intro-sub">Professionelle Webseiten für die Schweiz. Fertig in 7 Tagen. Persönlich betreut von Tom Merkt.</p>
+        <a href="#home" class="intro-cta">
+          <span>Mehr entdecken</span>
+          <div class="intro-arrow-wrap">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 2v10M7 12L3 8M7 12l4-4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+        </a>
+      </div>
+      <div class="intro-spline">
+        <spline-viewer url="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"></spline-viewer>
+      </div>
+    </div>
+    <a href="#home" class="intro-scroll-ind" aria-label="Nach unten scrollen">
+      <span>Scrollen</span>
+      <div class="scroll-mouse"><div class="scroll-wheel"></div></div>
+    </a>
+    <div style="position:absolute;bottom:0;left:0;right:0;height:320px;background:linear-gradient(to bottom,transparent 0%,#171b27 70%);pointer-events:none;z-index:5;"></div>
+  </section>
+
+  <!-- HERO -->
+  <section id="home">
+    <div class="hero-orb2"></div>
+    <div class="hero-grid" id="hgrid">
+
+      <!-- TEXT LEFT -->
+      <div>
+        <div class="badge-wrap">
+          <div class="badge-ring"></div>
+          <div class="badge"><span class="gdot"></span>Verfügbar für neue Projekte</div>
+        </div>
+        <h1 class="h1">
+          <span class="wl"><span class="w" style="transition-delay:.05s">Ihre neue</span></span>
+          <span class="wl"><span class="w wb" style="transition-delay:.17s">Webseite.</span></span>
+          <span class="wl"><span class="w" style="transition-delay:.29s">In 7 Tagen.</span></span>
+          <span class="wl"><span class="w hero-name" style="transition-delay:.41s">– Tom Merkt, Webdesign Schweiz</span></span>
+        </h1>
+        <p class="sub">Ich baue professionelle Webseiten für Schweizer Unternehmen und Selbstständige – massgeschneidert, modern und fertig in nur 7 Tagen.</p>
+        <div class="trust-pills">
+          <span class="pill"><span class="pill-check">✓</span> 7 Tage Lieferzeit</span>
+          <span class="pill"><span class="pill-check">✓</span> 1 Jahr Hosting inkl.</span>
+          <span class="pill"><span class="pill-check">✓</span> Persönliche Betreuung</span>
+        </div>
+        <div class="hbtns">
+          <a href="#kontakt" class="btn-p" data-magnetic>
+            Jetzt anfragen
+            <span class="arr"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2.5 7h9M11.5 7L8 3.5M11.5 7L8 10.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </a>
+        </div>
+      </div>
+
+      <!-- PHOTO RIGHT -->
+      <div>
+        <div class="tom-card" id="tomcard">
+          <div class="tom-img-wrap">
+            <img src="tom merkt.jpg" alt="Tom Merkt – Webdesigner Schweiz">
+            <div class="tom-img-grad"></div>
+            <div class="tom-name-tag">
+              <div class="tname">Tom Merkt</div>
+              <div class="trole">Webdesigner · Schweiz</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- TICKER -->
+  <div class="ticker" aria-hidden="true">
+    <div class="tk-track">
+      <div class="ti"><span class="ti-dot"></span>Webdesign Schweiz</div>
+      <div class="ti"><span class="ti-dot"></span>7 Tage Lieferzeit</div>
+      <div class="ti"><span class="ti-dot"></span>1 Jahr Hosting gratis</div>
+      <div class="ti"><span class="ti-dot"></span>Mobile-First</div>
+      <div class="ti"><span class="ti-dot"></span>Laufende Betreuung</div>
+      <div class="ti"><span class="ti-dot"></span>Massgeschneidert</div>
+      <div class="ti"><span class="ti-dot"></span>SEO-optimiert</div>
+      <div class="ti"><span class="ti-dot"></span>Persönlicher Service</div>
+      <div class="ti"><span class="ti-dot"></span>Webdesign Schweiz</div>
+      <div class="ti"><span class="ti-dot"></span>7 Tage Lieferzeit</div>
+      <div class="ti"><span class="ti-dot"></span>1 Jahr Hosting gratis</div>
+      <div class="ti"><span class="ti-dot"></span>Mobile-First</div>
+      <div class="ti"><span class="ti-dot"></span>Laufende Betreuung</div>
+      <div class="ti"><span class="ti-dot"></span>Massgeschneidert</div>
+      <div class="ti"><span class="ti-dot"></span>SEO-optimiert</div>
+      <div class="ti"><span class="ti-dot"></span>Persönlicher Service</div>
+    </div>
+  </div>
+
+  <!-- LEISTUNGEN + STATS -->
+  <section id="leistungen">
+    <div class="sec">
+      <div class="stats-top">
+        <div>
+          <h2 class="sh sh-dark rv" style="max-width:460px">Qualität, die<br>für sich spricht</h2>
+        </div>
+        <p class="stats-copy rv d2">Transparente Preise, schnelle Lieferung, persönliche Betreuung — das ist mein Versprechen an Sie.</p>
+      </div>
+      <div class="stats-grid rv d3">
+        <div class="stat">
+          <div class="stat-n">7 Tage</div>
+          <div class="stat-l">Durchschnittliche Lieferzeit</div>
+        </div>
+        <div class="stat">
+          <div class="stat-n">CHF 1'000</div>
+          <div class="stat-l">Startpreis inkl. Hosting</div>
+        </div>
+        <div class="stat">
+          <div class="stat-n">100 %</div>
+          <div class="stat-l">Zufriedene Kunden</div>
+        </div>
+      </div>
+
+      <!-- Service cards -->
+      <div class="svc-grid" style="margin-top:80px;">
+        <div class="kk kk-dark rv" style="grid-column:1/-1;margin-bottom:-36px">Was ich anbiete</div>
+        <div class="svc-card rv">
+          <div class="svc-icon">🎨</div>
+          <div class="svc-title">Webseite nach Mass</div>
+          <p class="svc-desc">Von der Idee zur fertigen Webseite in nur 7 Tagen. Modernes, individuelles Design, das perfekt zu Ihrem Unternehmen passt.</p>
+          <span class="svc-tag">⚡ Fertig in 7 Tagen</span>
+        </div>
+        <div class="svc-card rv d1">
+          <div class="svc-icon">☁️</div>
+          <div class="svc-title">Hosting &amp; Domain</div>
+          <p class="svc-desc">Das erste Jahr Hosting ist im Preis inbegriffen. Domain-Setup, SSL-Zertifikat und technische Konfiguration – alles inklusive.</p>
+          <span class="svc-tag">✓ 1 Jahr kostenlos</span>
+        </div>
+        <div class="svc-card rv d2">
+          <div class="svc-icon">🛠️</div>
+          <div class="svc-title">Laufende Betreuung</div>
+          <p class="svc-desc">Nach dem Launch bin ich weiterhin für Sie da. Kleine Anpassungen, Texte ändern, Bilder updaten – kein Problem, ich helfe gerne.</p>
+          <span class="svc-tag">👤 Persönlicher Ansprechpartner</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRICING -->
+  <section id="preise">
+    <div class="sec" style="position:relative;z-index:2;">
+      <div class="kk rv">Transparente Preise</div>
+      <h2 class="sh rv d1" style="max-width:520px">Alles inklusive –<br>keine versteckten Kosten</h2>
+      <div class="price-grid">
+        <div class="price-left rv">
+          <h3>Was ist alles dabei?</h3>
+          <p>Einmalig CHF 1'000 – und Sie erhalten eine vollständige, professionelle Webseite. Das erste Jahr Hosting ist gratis enthalten. Keine Überraschungen.</p>
+          <div class="price-features">
+            <div class="pf"><div class="pf-check">✓</div>Individuelle Webseite nach Ihren Wünschen</div>
+            <div class="pf"><div class="pf-check">✓</div>1 Jahr Hosting inklusive (kein Aufpreis)</div>
+            <div class="pf"><div class="pf-check">✓</div>Domain-Setup &amp; SSL-Zertifikat</div>
+            <div class="pf"><div class="pf-check">✓</div>Mobile-optimiert &amp; SEO-ready</div>
+            <div class="pf"><div class="pf-check">✓</div>Lieferung innerhalb von 7 Tagen</div>
+            <div class="pf"><div class="pf-check">✓</div>Laufende Betreuung für kleine Änderungen</div>
+            <div class="pf"><div class="pf-check">✓</div>Persönlicher Ansprechpartner: Tom Merkt</div>
+          </div>
+        </div>
+        <div class="price-card rv d2">
+          <div class="price-tag">⭐ Komplett-Paket</div>
+          <div class="price-amount"><span class="currency">CHF</span>1'000</div>
+          <div class="price-note">Einmalige Zahlung · Preis je nach Umfang</div>
+          <div class="price-renewal">🔄 Ab dem 2. Jahr: CHF 300/Jahr — Hosting, Domain &amp; Support</div>
+          <div class="price-divider"></div>
+          <div class="price-includes">
+            <div class="pi"><span class="pi-dot"></span>Massgeschneiderte Webseite</div>
+            <div class="pi"><span class="pi-dot"></span>1 Jahr Hosting gratis</div>
+            <div class="pi"><span class="pi-dot"></span>Domain &amp; SSL inklusive</div>
+            <div class="pi"><span class="pi-dot"></span>Mobile &amp; SEO optimiert</div>
+            <div class="pi"><span class="pi-dot"></span>7 Tage Lieferzeit</div>
+            <div class="pi"><span class="pi-dot"></span>Persönliche Betreuung nach Launch</div>
+          </div>
+          <a href="#kontakt" class="btn-p price-cta" data-magnetic>
+            Jetzt Projekt starten
+            <span class="arr"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2.5 7h9M11.5 7L8 3.5M11.5 7L8 10.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </a>
+          <p class="price-footer">Kostenloses Erstgespräch · Keine Verpflichtung</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROZESS -->
+  <section id="prozess">
+    <canvas id="prozess-canvas"></canvas>
+    <div class="sec" style="position:relative;z-index:2;">
+      <div class="proc-top">
+        <div class="kk rv">So läuft es ab</div>
+        <h2 class="sh rv d1" style="max-width:460px">In 4 Schritten<br>zu Ihrer Webseite</h2>
+      </div>
+      <div class="proc-grid rv d2">
+        <div class="pc">
+          <div class="pc-badge">01</div>
+          <div class="pc-title">Kostenloses Erstgespräch</div>
+          <p class="pc-desc">Wir besprechen Ihre Ziele, Wünsche und Ideen. Kostenlos und unverbindlich – per Telefon, Video oder persönlich.</p>
+        </div>
+        <div class="pc">
+          <div class="pc-badge">02</div>
+          <div class="pc-title">Konzept &amp; Design</div>
+          <p class="pc-desc">Ich erstelle einen massgeschneiderten Entwurf, der genau zu Ihrem Unternehmen und Ihrer Marke passt.</p>
+        </div>
+        <div class="pc">
+          <div class="pc-badge">03</div>
+          <div class="pc-title">Entwicklung &amp; Feinschliff</div>
+          <p class="pc-desc">Professionelle Umsetzung Ihrer Webseite – schnell, sauber und mit Liebe zum Detail. Sie geben Feedback, ich passe an.</p>
+        </div>
+        <div class="pc">
+          <div class="pc-badge">04</div>
+          <div class="pc-title">Launch in 7 Tagen</div>
+          <p class="pc-desc">Ihre neue Webseite geht live. Hosting, Domain und SSL sind eingerichtet. Ab jetzt bin ich Ihr laufender Ansprechpartner.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section id="stimmen">
+    <div class="sec">
+      <div class="kk kk-dark rv">Was Kunden sagen</div>
+      <h2 class="sh sh-dark rv d1">Zufriedene Kunden<br>sprechen für mich</h2>
+      <div class="test-grid">
+        <div class="tcard rv">
+          <div class="stars"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div>
+          <p class="tquote">Tom hat unsere Webseite in genau einer Woche geliefert. Das Resultat ist beeindruckend – modern, schnell und haargenau nach unseren Wünschen. Wir bekommen laufend Komplimente von unseren Gästen.</p>
+          <div class="tauthor">
+            <div class="tavatar">MH</div>
+            <div><div class="tname">Markus Huber</div><div class="trole">Inhaber, Restaurant Alpensicht, Bern</div></div>
+          </div>
+        </div>
+        <div class="tcard rv d1">
+          <div class="stars"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div>
+          <p class="tquote">Endlich eine Webseite, auf die ich stolz bin. Tom hat verstanden, was ich mir vorstelle – und es noch besser umgesetzt als gedacht. Super unkompliziert, pünktlich und zu einem fairen Preis.</p>
+          <div class="tauthor">
+            <div class="tavatar">SB</div>
+            <div><div class="tname">Sandra Brunner</div><div class="trole">Selbstständige Therapeutin, Zürich</div></div>
+          </div>
+        </div>
+        <div class="tcard rv d2">
+          <div class="stars"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div>
+          <p class="tquote">Preis und Leistung stimmen einfach. Ich war überrascht, wie professionell das Ergebnis ist. Tom ist unkompliziert, schnell und immer erreichbar. Klare Empfehlung!</p>
+          <div class="tauthor">
+            <div class="tavatar">PN</div>
+            <div><div class="tname">Patrick Näf</div><div class="trole">Geschäftsführer, Schreinerei Brunner, Basel</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="kontakt">
+    <div class="cta-in">
+      <div id="day" class="rv">Guten Montag,</div>
+      <h2 class="cta-h rv d1">Bereit für<br>Ihre neue<br><span class="bl">Webseite?</span></h2>
+      <p class="cta-sub rv d2">Kostenloses Erstgespräch – unverbindlich und ohne Risiko. Ich freue mich auf Ihre Nachricht.</p>
+      <div class="cta-row rv d3">
+        <a href="mailto:tomm.merkt@gmail.com" class="btn-p" data-magnetic>
+          Jetzt anfragen
+          <span class="arr"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2.5 7h9M11.5 7L8 3.5M11.5 7L8 10.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        </a>
+        <div class="cta-contact-links">
+          <a href="mailto:tomm.merkt@gmail.com" class="contact-link">
+            <span class="contact-link-icon">✉</span> tomm.merkt@gmail.com
+          </a>
+          <a href="tel:+4917642627553" class="contact-link">
+            <span class="contact-link-icon">📞</span> +49 176 426 27 553
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="foot-top">
+      <div class="foot-brand">
+        <img src="tm logo neu.png" alt="TM Design" class="foot-brand-logo">
+        <p>Professionelle Webseiten für die Schweiz. Fertig in 7 Tagen. Das erste Jahr Hosting inklusive.</p>
+        <div class="foot-socials">
+          <a href="#" class="fsoc" aria-label="Instagram" title="Instagram">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+          </a>
+          <a href="#" class="fsoc" aria-label="LinkedIn" title="LinkedIn">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          </a>
+        </div>
+      </div>
+      <div class="foot-col">
+        <h4>Navigation</h4>
+        <div class="foot-links">
+          <a href="#home">Startseite</a>
+          <a href="#leistungen">Leistungen</a>
+          <a href="#preise">Preise</a>
+          <a href="#prozess">Ablauf</a>
+          <a href="#stimmen">Referenzen</a>
+          <a href="#kontakt">Kontakt</a>
+        </div>
+      </div>
+      <div class="foot-col">
+        <h4>Kontakt</h4>
+        <div class="foot-links">
+          <a href="mailto:tomm.merkt@gmail.com">tomm.merkt@gmail.com</a>
+          <a href="tel:+4917642627553">+49 176 426 27 553</a>
+          <a href="#kontakt">Erstgespräch buchen</a>
+          <span style="cursor:default">Schweiz 🇨🇭</span>
+          <span id="ltime" style="cursor:default">Ortszeit: --:--</span>
+        </div>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span class="foot-copy">© 2026 Tom Merkt · TM Design · Alle Rechte vorbehalten</span>
+      <div class="foot-legal">
+        <a href="#">Datenschutz</a>
+        <a href="#">Impressum</a>
+      </div>
+    </div>
+  </footer>
+
+  <a href="#home" id="btt" aria-label="Nach oben">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+      <path d="M8 12V4M8 4L4 8M8 4l4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </a>
+
+  <script>
+  (() => {
+    // ─── LENIS ───
+    const lenis = new Lenis({ duration: 1.2, easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)) });
+    (function rf(t) { lenis.raf(t); requestAnimationFrame(rf); })(0);
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', e => {
+        const el = document.querySelector(a.getAttribute('href'));
+        if (el) { e.preventDefault(); lenis.scrollTo(el, { offset: -64, duration: 1.4 }); }
+      });
+    });
+
+    // ─── PROGRESS ───
+    lenis.on('scroll', ({ progress }) => {
+      document.getElementById('prog').style.transform = `scaleX(${progress})`;
+    });
+
+    // ─── LOADER + INTRO ENTRANCE ───
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        document.getElementById('loader').classList.add('out');
+        const intro = document.getElementById('intro');
+        if (intro) intro.classList.add('intro-on');
+      }, 800);
+    });
+
+    // ─── HERO ENTRANCE (on scroll into view) ───
+    const heroObs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (!e.isIntersecting) return;
+        e.target.classList.add('on');
+        heroObs.unobserve(e.target);
+        setTimeout(() => { const tc = document.getElementById('tomcard'); if (tc) tc.classList.add('floating'); }, 1200);
+      });
+    }, { threshold: .15 });
+    const hgridEl = document.getElementById('hgrid');
+    if (hgridEl) heroObs.observe(hgridEl);
+
+    // ─── CURSOR ───
+    const cur = document.getElementById('cur'), ring = document.getElementById('cur-r');
+    let mx=0,my=0,rx=0,ry=0;
+    window.addEventListener('mousemove', e => { mx=e.clientX; my=e.clientY; });
+    (function ac() {
+      cur.style.left=mx+'px'; cur.style.top=my+'px';
+      rx+=(mx-rx)*.11; ry+=(my-ry)*.11;
+      ring.style.left=rx+'px'; ring.style.top=ry+'px';
+      requestAnimationFrame(ac);
+    })();
+    document.querySelectorAll('a,button,[tabindex]').forEach(el => {
+      el.addEventListener('mouseenter', () => document.body.classList.add('cl'));
+      el.addEventListener('mouseleave', () => document.body.classList.remove('cl'));
+    });
+    document.querySelectorAll('.btn-p,.nav-cta,#btt').forEach(el => {
+      el.addEventListener('mouseenter', () => { document.body.classList.remove('cl'); document.body.classList.add('cb'); });
+      el.addEventListener('mouseleave', () => document.body.classList.remove('cb'));
+    });
+    document.addEventListener('mouseleave', () => { cur.style.opacity='0'; ring.style.opacity='0'; });
+    document.addEventListener('mouseenter', () => { cur.style.opacity='1'; ring.style.opacity='1'; });
+
+    // ─── NAV SCROLL + ACTIVE ───
+    const nav = document.getElementById('nav');
+    lenis.on('scroll', ({ scroll }) => nav.classList.toggle('scrolled', scroll > 30));
+    const secs = document.querySelectorAll('section[id]');
+    const navAs = document.querySelectorAll('.nav-ul a:not(.nav-cta)');
+    const io2 = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (!e.isIntersecting) return;
+        navAs.forEach(a => a.classList.remove('active'));
+        const a = document.querySelector(`.nav-ul a[href="#${e.target.id}"]`);
+        if (a) a.classList.add('active');
+      });
+    }, { threshold: .25, rootMargin: '-64px 0px -40% 0px' });
+    secs.forEach(s => io2.observe(s));
+
+    // ─── MOBILE NAV ───
+    const ham = document.getElementById('ham'), mob = document.getElementById('mob');
+    ham.addEventListener('click', () => {
+      const o = ham.classList.toggle('open');
+      ham.setAttribute('aria-expanded', o);
+      mob.classList.toggle('open');
+      o ? lenis.stop() : lenis.start();
+    });
+    mob.querySelectorAll('a').forEach(a => {
+      a.addEventListener('click', () => { ham.classList.remove('open'); mob.classList.remove('open'); ham.setAttribute('aria-expanded','false'); lenis.start(); });
+    });
+
+    // ─── SCROLL REVEALS ───
+    const rObs = new IntersectionObserver(entries => {
+      entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('in'); rObs.unobserve(e.target); } });
+    }, { threshold: .1 });
+    document.querySelectorAll('.rv').forEach(el => rObs.observe(el));
+
+
+    // ─── 3D TILT ───
+    document.querySelectorAll('.tcard').forEach(el => {
+      el.addEventListener('mousemove', e => {
+        const r=el.getBoundingClientRect();
+        const x=(e.clientX-r.left-r.width/2)/(r.width/2);
+        const y=(e.clientY-r.top-r.height/2)/(r.height/2);
+        el.style.transform=`perspective(900px) rotateY(${x*4}deg) rotateX(${-y*4}deg) translateY(-4px)`;
+      });
+      el.addEventListener('mouseleave', ()=>{ el.style.transform=''; });
+    });
+
+    // ─── MAGNETIC BUTTONS ───
+    document.querySelectorAll('[data-magnetic]').forEach(btn => {
+      btn.addEventListener('mousemove', e => {
+        const r=btn.getBoundingClientRect();
+        btn.style.transform=`translate(${(e.clientX-(r.left+r.width/2))*.22}px, ${(e.clientY-(r.top+r.height/2))*.22}px)`;
+      });
+      btn.addEventListener('mouseleave', ()=>{ btn.style.transform=''; });
+    });
+
+
+    // ─── PROZESS WEBGL SHADER ───
+    (function initProzessShader() {
+      const canvas = document.getElementById('prozess-canvas');
+      if (!canvas) return;
+      const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+      if (!gl) return;
+
+      const vert = `
+        attribute vec2 a_pos;
+        void main() { gl_Position = vec4(a_pos, 0.0, 1.0); }
+      `;
+      const frag = `
+        precision mediump float;
+        uniform float u_time;
+        uniform vec2 u_res;
+
+        float hash(vec2 p) {
+          return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453123);
+        }
+
+        float noise(vec2 p) {
+          vec2 i = floor(p);
+          vec2 f = fract(p);
+          vec2 u = f * f * (3.0 - 2.0 * f);
+          return mix(
+            mix(hash(i + vec2(0,0)), hash(i + vec2(1,0)), u.x),
+            mix(hash(i + vec2(0,1)), hash(i + vec2(1,1)), u.x),
+            u.y
+          );
+        }
+
+        float fbm(vec2 p) {
+          float v = 0.0; float a = 0.5;
+          for (int i = 0; i < 4; i++) {
+            v += a * noise(p);
+            p = p * 2.1 + vec2(1.3, 0.7);
+            a *= 0.5;
+          }
+          return v;
+        }
+
+        void main() {
+          vec2 uv = gl_FragCoord.xy / u_res;
+          float t = u_time * 0.18;
+
+          float n1 = fbm(uv * 2.8 + vec2(t * 0.6, t * 0.3));
+          float n2 = fbm(uv * 2.2 - vec2(t * 0.4, t * 0.7) + vec2(n1 * 0.6));
+          float n3 = fbm(uv * 3.5 + vec2(t * 0.5, -t * 0.4) + vec2(n2 * 0.4));
+
+          float lines = 0.0;
+          for (int i = 0; i < 5; i++) {
+            float fi = float(i);
+            float phase = fi * 1.3 + t;
+            vec2 lp = uv + vec2(n2 * 0.15, n1 * 0.15);
+            float wave = sin(lp.x * 5.0 + phase + n3 * 2.0) * 0.5 + 0.5;
+            float strip = smoothstep(0.48, 0.5, wave) * smoothstep(0.52, 0.5, wave);
+            strip += smoothstep(0.38, 0.4, wave) * smoothstep(0.42, 0.4, wave) * 0.35;
+            lines += strip * (0.6 + fi * 0.08);
+          }
+
+          float glow = fbm(uv * 1.5 + vec2(t * 0.25)) * 0.12;
+          lines = clamp(lines + glow, 0.0, 1.0) * 0.38;
+
+          vec3 lineCol = vec3(0.17, 0.17, 0.95);
+          vec3 col = lineCol * lines;
+
+          gl_FragColor = vec4(col, 1.0);
+        }
+      `;
+
+      function compile(type, src) {
+        const s = gl.createShader(type);
+        gl.shaderSource(s, src);
+        gl.compileShader(s);
+        return s;
+      }
+      const prog = gl.createProgram();
+      gl.attachShader(prog, compile(gl.VERTEX_SHADER, vert));
+      gl.attachShader(prog, compile(gl.FRAGMENT_SHADER, frag));
+      gl.linkProgram(prog);
+      gl.useProgram(prog);
+
+      const buf = gl.createBuffer();
+      gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+      gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1,1,-1,-1,1,1,1]), gl.STATIC_DRAW);
+      const aPos = gl.getAttribLocation(prog, 'a_pos');
+      gl.enableVertexAttribArray(aPos);
+      gl.vertexAttribPointer(aPos, 2, gl.FLOAT, false, 0, 0);
+
+      const uTime = gl.getUniformLocation(prog, 'u_time');
+      const uRes = gl.getUniformLocation(prog, 'u_res');
+
+      const section = document.getElementById('prozess');
+      function resize() {
+        const w = section.offsetWidth, h = section.offsetHeight;
+        const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+        canvas.width = w * dpr; canvas.height = h * dpr;
+        gl.viewport(0, 0, canvas.width, canvas.height);
+      }
+      resize();
+      window.addEventListener('resize', resize);
+
+      let rafId = null, running = false, startTime = null;
+
+      function render(ts) {
+        if (!running) return;
+        if (!startTime) startTime = ts;
+        const t = (ts - startTime) * 0.001;
+        gl.uniform1f(uTime, t);
+        gl.uniform2f(uRes, canvas.width, canvas.height);
+        gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+        rafId = requestAnimationFrame(render);
+      }
+
+      const visObs = new IntersectionObserver(entries => {
+        entries.forEach(e => {
+          if (e.isIntersecting && !running) {
+            running = true;
+            rafId = requestAnimationFrame(render);
+          } else if (!e.isIntersecting && running) {
+            running = false;
+            if (rafId) { cancelAnimationFrame(rafId); rafId = null; }
+          }
+        });
+      }, { threshold: 0.05 });
+      visObs.observe(section);
+    })();
+
+    // ─── BACK TO TOP ───
+    const btt = document.getElementById('btt');
+    lenis.on('scroll', ({scroll}) => btt.classList.toggle('show', scroll>400));
+
+    // ─── DYNAMIC DAY + TIME ───
+    const greetings = ['Guten Sonntag,','Guten Montag,','Guten Dienstag,','Guten Mittwoch,','Guten Donnerstag,','Guten Freitag,','Guten Samstag,'];
+    document.getElementById('day').textContent = greetings[new Date().getDay()];
+    function updTime() {
+      const t=new Date();
+      document.getElementById('ltime').textContent = `Ortszeit: ${String(t.getHours()).padStart(2,'0')}:${String(t.getMinutes()).padStart(2,'0')}`;
+    }
+    updTime(); setInterval(updTime, 30000);
+  })();
+  </script>
+</body>
+</html>
