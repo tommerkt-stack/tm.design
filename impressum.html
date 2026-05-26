@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Impressum — Merkt Design</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --p: #2c2cf3;
+      --dark: #171b27;
+      --d2: #1e2436;
+      --d3: #222840;
+      --border: rgba(255,255,255,0.07);
+      --light: #f4f3ee;
+      --muted: #7a8099;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+      background: var(--dark);
+      color: #fff;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+      font-feature-settings: "calt","ss07","ss08","cv01","zero","cv03","cv04";
+    }
+
+    /* ─── HEADER ─── */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(23,27,39,.92);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      height: 64px;
+      display: flex;
+      align-items: center;
+      padding: 0 48px;
+    }
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.875rem;
+      font-weight: 500;
+      letter-spacing: 0.01em;
+      transition: color .2s;
+    }
+    .back-link:hover { color: #fff; }
+    .back-link svg { transition: transform .2s; }
+    .back-link:hover svg { transform: translateX(-3px); }
+    .header-logo {
+      margin-left: auto;
+      height: 32px;
+      width: auto;
+      opacity: 0.85;
+    }
+
+    /* ─── MAIN ─── */
+    main {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 72px 24px 96px;
+    }
+
+    .page-label {
+      display: inline-block;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--p);
+      margin-bottom: 16px;
+    }
+
+    h1 {
+      font-size: clamp(1.75rem, 4vw, 2.5rem);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1.15;
+      margin-bottom: 12px;
+    }
+
+    .last-updated {
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-bottom: 56px;
+    }
+
+    .legal-card {
+      background: var(--d2);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 40px;
+      margin-bottom: 24px;
+    }
+
+    .legal-card + .legal-card { }
+
+    h2 {
+      font-size: 1rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      color: var(--light);
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    p {
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.7);
+      line-height: 1.75;
+      margin-bottom: 10px;
+    }
+    p:last-child { margin-bottom: 0; }
+
+    a {
+      color: var(--p);
+      text-decoration: none;
+      transition: opacity .15s;
+    }
+    a:hover { opacity: 0.75; }
+
+    .contact-grid {
+      display: grid;
+      gap: 8px;
+    }
+    .contact-row {
+      display: flex;
+      gap: 16px;
+      align-items: baseline;
+      font-size: 0.9rem;
+    }
+    .contact-label {
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: var(--muted);
+      min-width: 80px;
+      flex-shrink: 0;
+    }
+    .contact-value {
+      color: rgba(255,255,255,0.85);
+    }
+
+    .disclaimer-box {
+      background: rgba(44,44,243,0.06);
+      border: 1px solid rgba(44,44,243,0.15);
+      border-radius: 10px;
+      padding: 16px 20px;
+      font-size: 0.82rem;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      text-align: center;
+      padding: 32px 24px 48px;
+      font-size: 0.8rem;
+      color: var(--muted);
+      border-top: 1px solid var(--border);
+    }
+    footer a { color: var(--muted); }
+    footer a:hover { color: #fff; }
+
+    @media (max-width: 600px) {
+      header { padding: 0 20px; }
+      main { padding: 48px 20px 72px; }
+      .legal-card { padding: 24px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <a href="index.html" class="back-link">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+        <path d="M10 13L5 8l5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      Zurück zur Website
+    </a>
+    <img src="brand_assets/logo.png" alt="Merkt Design" class="header-logo">
+  </header>
+
+  <main>
+    <span class="page-label">Rechtliches</span>
+    <h1>Impressum</h1>
+    <p class="last-updated">Stand: Mai 2026</p>
+
+    <div class="legal-card">
+      <h2>Angaben zum Unternehmen</h2>
+      <div class="contact-grid">
+        <div class="contact-row">
+          <span class="contact-label">Name</span>
+          <span class="contact-value">Tom Merkt</span>
+        </div>
+        <div class="contact-row">
+          <span class="contact-label">Firma</span>
+          <span class="contact-value">Merkt Design</span>
+        </div>
+        <div class="contact-row">
+          <span class="contact-label">Adresse</span>
+          <span class="contact-value">Freihofstrasse 5B<br>8280 Kreuzlingen<br>Schweiz</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="legal-card">
+      <h2>Kontakt</h2>
+      <div class="contact-grid">
+        <div class="contact-row">
+          <span class="contact-label">E-Mail</span>
+          <span class="contact-value"><a href="mailto:tommerkt@outlook.de">tommerkt@outlook.de</a></span>
+        </div>
+        <div class="contact-row">
+          <span class="contact-label">Telefon</span>
+          <span class="contact-value"><a href="tel:+4917642627553">+49 176 42627553</a></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="legal-card">
+      <h2>Unternehmensform</h2>
+      <p>Merkt Design wird als Einzelunternehmen geführt und ist nicht im Handelsregister eingetragen. Es besteht keine Mehrwertsteuerpflicht.</p>
+    </div>
+
+    <div class="legal-card">
+      <h2>Verantwortlich für den Inhalt</h2>
+      <p>Tom Merkt<br>Freihofstrasse 5B, 8280 Kreuzlingen, Schweiz</p>
+    </div>
+
+    <div class="legal-card">
+      <h2>Haftungsausschluss</h2>
+      <p><strong style="color:#fff;font-weight:600;">Inhalt dieser Website</strong><br>
+      Die Inhalte dieser Website wurden mit grösster Sorgfalt erstellt. Für die Richtigkeit, Vollständigkeit und Aktualität der Inhalte wird jedoch keine Gewähr übernommen. Als Diensteanbieter bin ich für eigene Inhalte auf dieser Website verantwortlich.</p>
+      <p><strong style="color:#fff;font-weight:600;">Externe Links</strong><br>
+      Diese Website kann Links zu externen Websites Dritter enthalten. Auf deren Inhalte habe ich keinen Einfluss und kann daher für diese keine Gewähr übernehmen. Für die Inhalte verlinkter Seiten ist stets der jeweilige Anbieter oder Betreiber der Seite verantwortlich.</p>
+    </div>
+
+    <div class="legal-card">
+      <h2>Urheberrecht</h2>
+      <p>Die durch Tom Merkt erstellten Inhalte und Werke auf diesen Seiten unterliegen dem Schweizer Urheberrecht. Die Vervielfältigung, Bearbeitung, Verbreitung und jede Art der Verwertung ausserhalb der Grenzen des Urheberrechts bedürfen der schriftlichen Zustimmung des jeweiligen Autors bzw. Erstellers.</p>
+    </div>
+
+    <div class="disclaimer-box">
+      Bei Fragen zum Impressum stehe ich Ihnen gerne per E-Mail unter <a href="mailto:tommerkt@outlook.de">tommerkt@outlook.de</a> zur Verfügung.
+    </div>
+  </main>
+
+  <footer>
+    <p>© 2026 Tom Merkt · Merkt Design &nbsp;·&nbsp; <a href="datenschutz.html">Datenschutz</a> &nbsp;·&nbsp; <a href="impressum.html">Impressum</a></p>
+  </footer>
+
+</body>
+</html>

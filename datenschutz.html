@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Datenschutzerklärung — Merkt Design</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --p: #2c2cf3;
+      --dark: #171b27;
+      --d2: #1e2436;
+      --d3: #222840;
+      --border: rgba(255,255,255,0.07);
+      --light: #f4f3ee;
+      --muted: #7a8099;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+      background: var(--dark);
+      color: #fff;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+      font-feature-settings: "calt","ss07","ss08","cv01","zero","cv03","cv04";
+    }
+
+    /* ─── HEADER ─── */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(23,27,39,.92);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      height: 64px;
+      display: flex;
+      align-items: center;
+      padding: 0 48px;
+    }
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.875rem;
+      font-weight: 500;
+      letter-spacing: 0.01em;
+      transition: color .2s;
+    }
+    .back-link:hover { color: #fff; }
+    .back-link svg { transition: transform .2s; }
+    .back-link:hover svg { transform: translateX(-3px); }
+    .header-logo {
+      margin-left: auto;
+      height: 32px;
+      width: auto;
+      opacity: 0.85;
+    }
+
+    /* ─── MAIN ─── */
+    main {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 72px 24px 96px;
+    }
+
+    .page-label {
+      display: inline-block;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--p);
+      margin-bottom: 16px;
+    }
+
+    h1 {
+      font-size: clamp(1.75rem, 4vw, 2.5rem);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1.15;
+      margin-bottom: 12px;
+    }
+
+    .last-updated {
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-bottom: 56px;
+    }
+
+    .legal-card {
+      background: var(--d2);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 40px;
+      margin-bottom: 24px;
+    }
+
+    h2 {
+      font-size: 1rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      color: var(--light);
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    p {
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.7);
+      line-height: 1.75;
+      margin-bottom: 12px;
+    }
+    p:last-child { margin-bottom: 0; }
+
+    ul {
+      margin: 10px 0 12px 0;
+      padding-left: 0;
+      list-style: none;
+    }
+    li {
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.7);
+      line-height: 1.75;
+      padding-left: 20px;
+      position: relative;
+      margin-bottom: 4px;
+    }
+    li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0.65em;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--p);
+      opacity: 0.6;
+    }
+
+    a {
+      color: var(--p);
+      text-decoration: none;
+      transition: opacity .15s;
+    }
+    a:hover { opacity: 0.75; }
+
+    strong {
+      color: rgba(255,255,255,0.9);
+      font-weight: 600;
+    }
+
+    .service-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(44,44,243,0.1);
+      border: 1px solid rgba(44,44,243,0.2);
+      border-radius: 6px;
+      padding: 4px 10px;
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: rgba(100,120,255,0.9);
+      margin-bottom: 12px;
+    }
+
+    .rights-grid {
+      display: grid;
+      gap: 12px;
+      margin-top: 4px;
+    }
+    .right-item {
+      border-left: 2px solid rgba(44,44,243,0.35);
+      padding-left: 16px;
+    }
+    .right-title {
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: rgba(255,255,255,0.9);
+      margin-bottom: 2px;
+    }
+    .right-desc {
+      font-size: 0.82rem;
+      color: var(--muted);
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    .disclaimer-box {
+      background: rgba(44,44,243,0.06);
+      border: 1px solid rgba(44,44,243,0.15);
+      border-radius: 10px;
+      padding: 16px 20px;
+      font-size: 0.82rem;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      text-align: center;
+      padding: 32px 24px 48px;
+      font-size: 0.8rem;
+      color: var(--muted);
+      border-top: 1px solid var(--border);
+    }
+    footer a { color: var(--muted); }
+    footer a:hover { color: #fff; }
+
+    @media (max-width: 600px) {
+      header { padding: 0 20px; }
+      main { padding: 48px 20px 72px; }
+      .legal-card { padding: 24px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <a href="index.html" class="back-link">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+        <path d="M10 13L5 8l5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      Zurück zur Website
+    </a>
+    <img src="brand_assets/logo.png" alt="Merkt Design" class="header-logo">
+  </header>
+
+  <main>
+    <span class="page-label">Rechtliches</span>
+    <h1>Datenschutzerklärung</h1>
+    <p class="last-updated">Stand: Mai 2026 · Gültig gemäss Schweizer Datenschutzgesetz (DSG)</p>
+
+    <div class="legal-card">
+      <h2>Verantwortliche Stelle</h2>
+      <p>Verantwortlich für die Verarbeitung personenbezogener Daten auf dieser Website ist:</p>
+      <p>
+        <strong>Tom Merkt / Merkt Design</strong><br>
+        Freihofstrasse 5B<br>
+        8280 Kreuzlingen, Schweiz<br>
+        E-Mail: <a href="mailto:tommerkt@outlook.de">tommerkt@outlook.de</a><br>
+        Telefon: <a href="tel:+4917642627553">+49 176 42627553</a>
+      </p>
+    </div>
+
+    <div class="legal-card">
+      <h2>Grundsätze der Datenverarbeitung</h2>
+      <p>Der Schutz Ihrer persönlichen Daten ist mir ein wichtiges Anliegen. Ich verarbeite Ihre Daten ausschliesslich auf Grundlage der gesetzlichen Bestimmungen des Schweizer Datenschutzgesetzes (DSG) sowie, soweit anwendbar, der Datenschutz-Grundverordnung (DSGVO) der Europäischen Union.</p>
+      <p>Diese Website verwendet <strong>keine Cookies</strong>, kein Web-Tracking und kein Analytics. Es werden keine Nutzungsprofile erstellt.</p>
+    </div>
+
+    <div class="legal-card">
+      <h2>Automatisch erhobene Daten (Serverlogs)</h2>
+      <p>Beim Besuch dieser Website werden durch den Hosting-Anbieter automatisch technische Daten in sogenannten Server-Logfiles erfasst. Dies umfasst:</p>
+      <ul>
+        <li>IP-Adresse des anfragenden Geräts (anonymisiert)</li>
+        <li>Datum und Uhrzeit des Zugriffs</li>
+        <li>Aufgerufene Seite / Dateiname</li>
+        <li>Verwendeter Browser und Betriebssystem</li>
+        <li>Übertragene Datenmenge und HTTP-Statuscode</li>
+      </ul>
+      <p>Diese Daten werden ausschliesslich zur Sicherstellung des technischen Betriebs und zur Abwehr von Angriffen verarbeitet. Eine Zusammenführung mit anderen Datenquellen findet nicht statt. Die Speicherdauer beträgt in der Regel 30 Tage.</p>
+    </div>
+
+    <div class="legal-card">
+      <h2>Eingebettete Drittanbieter-Dienste</h2>
+      <span class="service-tag">
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="5" stroke="currentColor" stroke-width="1.2"/><path d="M6 4v3M6 8.5v.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+        Spline 3D (spline.design)
+      </span>
+      <p>Diese Website bindet interaktive 3D-Inhalte von <strong>Spline Design</strong> (Spline Technologies Inc.) ein. Dabei wird eine direkte Verbindung zu den Servern von Spline hergestellt. Spline kann dabei technische Daten wie Ihre IP-Adresse und Browser-Informationen erhalten.</p>
+      <p>Weitere Informationen zur Datenverarbeitung durch Spline finden Sie in der Datenschutzerklärung von Spline unter <a href="https://spline.design/privacy" target="_blank" rel="noopener noreferrer">spline.design/privacy</a>.</p>
+      <p>Andere externe Dienste (z.&nbsp;B. Google Analytics, Facebook Pixel, Hotjar o.&nbsp;ä.) sind auf dieser Website <strong>nicht eingebunden</strong>.</p>
+    </div>
+
+    <div class="legal-card">
+      <h2>Kontaktaufnahme per E-Mail</h2>
+      <p>Wenn Sie mich per E-Mail kontaktieren, werden die übermittelten Daten (Ihre E-Mail-Adresse, Name und Nachrichteninhalt) ausschliesslich zur Bearbeitung Ihrer Anfrage gespeichert und verwendet. Eine Weitergabe an Dritte erfolgt nicht. Die Daten werden nach abgeschlossener Bearbeitung gelöscht, sofern keine gesetzlichen Aufbewahrungspflichten entgegenstehen.</p>
+    </div>
+
+    <div class="legal-card">
+      <h2>Ihre Rechte</h2>
+      <p>Als betroffene Person haben Sie gemäss DSG und DSGVO folgende Rechte:</p>
+      <div class="rights-grid">
+        <div class="right-item">
+          <div class="right-title">Auskunft</div>
+          <p class="right-desc">Sie können jederzeit Auskunft darüber verlangen, welche Daten ich über Sie gespeichert habe.</p>
+        </div>
+        <div class="right-item">
+          <div class="right-title">Berichtigung</div>
+          <p class="right-desc">Sie können die Berichtigung unrichtiger Daten verlangen.</p>
+        </div>
+        <div class="right-item">
+          <div class="right-title">Löschung</div>
+          <p class="right-desc">Sie können die Löschung Ihrer Daten verlangen, sofern keine gesetzlichen Aufbewahrungspflichten bestehen.</p>
+        </div>
+        <div class="right-item">
+          <div class="right-title">Einschränkung der Verarbeitung</div>
+          <p class="right-desc">Sie können unter bestimmten Voraussetzungen die Einschränkung der Verarbeitung verlangen.</p>
+        </div>
+        <div class="right-item">
+          <div class="right-title">Beschwerde</div>
+          <p class="right-desc">Sie haben das Recht, sich beim Eidgenössischen Datenschutz- und Öffentlichkeitsbeauftragten (EDÖB) zu beschweren.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="legal-card">
+      <h2>Datensicherheit</h2>
+      <p>Diese Website wird über eine gesicherte HTTPS-Verbindung (SSL/TLS) ausgeliefert. Dabei werden alle übertragenen Daten verschlüsselt, um einen unbefugten Zugriff durch Dritte zu verhindern.</p>
+    </div>
+
+    <div class="legal-card">
+      <h2>Änderungen dieser Datenschutzerklärung</h2>
+      <p>Ich behalte mir vor, diese Datenschutzerklärung bei Bedarf anzupassen, um sie stets den aktuellen rechtlichen Anforderungen anzupassen. Die jeweils aktuelle Version finden Sie auf dieser Seite.</p>
+    </div>
+
+    <div class="disclaimer-box">
+      Bei Fragen zum Datenschutz können Sie mich jederzeit per E-Mail unter <a href="mailto:tommerkt@outlook.de">tommerkt@outlook.de</a> kontaktieren.
+    </div>
+  </main>
+
+  <footer>
+    <p>© 2026 Tom Merkt · Merkt Design &nbsp;·&nbsp; <a href="datenschutz.html">Datenschutz</a> &nbsp;·&nbsp; <a href="impressum.html">Impressum</a></p>
+  </footer>
+
+</body>
+</html>
