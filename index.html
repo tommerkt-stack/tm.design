@@ -3,12 +3,63 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TM Design — Webseiten für die Schweiz</title>
+  <title>Merkt Design — Webseiten für die Schweiz</title>
   <meta name="description" content="Professionelle Webseiten für Schweizer Unternehmen. Fertig in 7 Tagen. Tom Merkt – Ihr Webdesigner aus der Schweiz.">
+
+  <!-- SEO: Canonical & Robots -->
+  <link rel="canonical" href="https://www.tmdesign.ch/" />
+  <meta name="robots" content="index, follow" />
+
+  <!-- SEO: Open Graph -->
+  <meta property="og:type"         content="website" />
+  <meta property="og:locale"       content="de_CH" />
+  <meta property="og:url"          content="https://www.tmdesign.ch/" />
+  <meta property="og:site_name"    content="Merkt Design" />
+  <meta property="og:title"        content="Merkt Design — Webseiten für die Schweiz" />
+  <meta property="og:description"  content="Professionelle Webseiten für Schweizer Unternehmen. Fertig in 7 Tagen. Tom Merkt – Ihr Webdesigner aus der Schweiz." />
+  <meta property="og:image"        content="https://www.tmdesign.ch/tom merkt.jpg" />
+  <meta property="og:image:width"  content="1200" />
+  <meta property="og:image:height" content="630" />
+
+  <!-- SEO: Twitter Card -->
+  <meta name="twitter:card"        content="summary_large_image" />
+  <meta name="twitter:title"       content="Merkt Design — Webseiten für die Schweiz" />
+  <meta name="twitter:description" content="Professionelle Webseiten für Schweizer Unternehmen. Fertig in 7 Tagen." />
+  <meta name="twitter:image"       content="https://www.tmdesign.ch/tom merkt.jpg" />
+
+  <!-- SEO: Schema.org LocalBusiness -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "name": "Merkt Design",
+    "alternateName": ["TM Design", "Tom Merkt Design"],
+    "url": "https://www.tmdesign.ch",
+    "logo": "https://www.tmdesign.ch/brand_assets/logo.png",
+    "image": "https://www.tmdesign.ch/tom merkt.jpg",
+    "description": "Professionelle Webseiten für Schweizer Unternehmen. Fertig in 7 Tagen.",
+    "founder": {
+      "@type": "Person",
+      "name": "Tom Merkt"
+    },
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Freihofstrasse 5B",
+      "addressLocality": "Kreuzlingen",
+      "postalCode": "8280",
+      "addressCountry": "CH"
+    },
+    "telephone": "+4917642627553",
+    "email": "merkt.design@gmail.com",
+    "areaServed": { "@type": "Country", "name": "Switzerland" },
+    "priceRange": "CHF 490–1190"
+  }
+  </script>
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js" defer></script>
   <script type="module" src="https://unpkg.com/@splinetool/viewer/build/spline-viewer.js"></script>
   <style>
     @property --rotate {
@@ -822,7 +873,7 @@
 
   <!-- LOADER -->
   <div id="loader">
-    <img src="tm logo neu.png" alt="TM Design">
+    <img src="tm logo neu.png" alt="Merkt Design">
     <div class="ldr-bar"><div class="ldr-fill"></div></div>
   </div>
 
@@ -830,7 +881,7 @@
   <nav id="nav">
     <div class="nav-in">
       <a href="#home" class="nav-logo">
-        <img src="tm logo neu.png" alt="TM Design">
+        <img src="tm logo neu.png" alt="Merkt Design">
       </a>
       <ul class="nav-ul">
         <li><a href="#leistungen">Leistungen</a></li>
@@ -857,8 +908,8 @@
     <div class="intro-spot2"></div>
     <div class="intro-grid">
       <div class="intro-left">
-        <div class="intro-eyebrow">TM Design · Webdesign Schweiz</div>
-        <h1 class="intro-h1">Bereit<br><span style="color:var(--p)">gesehen</span><br>zu werden?</h1>
+        <div class="intro-eyebrow">Merkt Design · Webdesign Schweiz</div>
+        <p class="intro-h1">Bereit<br><span style="color:var(--p)">gesehen</span><br>zu werden?</p>
         <p class="intro-sub">Professionelle Webseiten für die Schweiz. Fertig in 7 Tagen. Persönlich betreut von Tom Merkt.</p>
         <a href="#home" class="intro-cta">
           <span>Mehr entdecken</span>
@@ -913,7 +964,7 @@
       <div>
         <div class="tom-card" id="tomcard">
           <div class="tom-img-wrap">
-            <img src="tom merkt.jpg" alt="Tom Merkt – Webdesigner Schweiz">
+            <img src="tom merkt.jpg" alt="Tom Merkt – Webdesigner Schweiz" loading="lazy">
             <div class="tom-img-grad"></div>
             <div class="tom-name-tag">
               <div class="tname">Tom Merkt</div>
@@ -1121,7 +1172,7 @@
   <footer>
     <div class="foot-top">
       <div class="foot-brand">
-        <img src="tm logo neu.png" alt="TM Design" class="foot-brand-logo">
+        <img src="tm logo neu.png" alt="Merkt Design" class="foot-brand-logo" loading="lazy">
         <p>Professionelle Webseiten für die Schweiz. Fertig in 7 Tagen. Das erste Jahr Hosting inklusive.</p>
         <div class="foot-socials">
           <a href="#" class="fsoc" aria-label="Instagram" title="Instagram">
@@ -1155,7 +1206,7 @@
       </div>
     </div>
     <div class="foot-bottom">
-      <span class="foot-copy">© 2026 Tom Merkt · TM Design · Alle Rechte vorbehalten</span>
+      <span class="foot-copy">© 2026 Tom Merkt · Merkt Design · Alle Rechte vorbehalten</span>
       <div class="foot-legal">
         <a href="datenschutz.html">Datenschutz</a>
         <a href="impressum.html">Impressum</a>
